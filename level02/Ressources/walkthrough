@@ -1,0 +1,7 @@
+b *main + 148
+x/s 0x400bb0
+x/s 0x400bb2
+run
+set {char[7]} 0x400bb2 = "./test"
+x/s 0x400bb2
+c
