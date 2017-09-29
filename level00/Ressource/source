@@ -1,0 +1,11 @@
+int	main()
+{
+	char	password[0x20];
+	puts("Enter password :");
+	scanf("%s\n", &password);
+	if (strcmp(password, 0x149c))
+		system("/bon/sh");
+	else
+		puts("Invalid Password !");
+	return (0);
+}

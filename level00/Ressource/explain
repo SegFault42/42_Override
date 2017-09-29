@@ -1,0 +1,3 @@
+Nous avons un binaire qui demande un mot de pass pour lancer un shell.
+
+Si nous faisons gdb ./level00 on vois qu'il y a un cmp avec la valeur attendue.
