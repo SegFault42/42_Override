@@ -1,0 +1,33 @@
+void	verify_user_pass(char *pass)
+{
+	puts("Verifying Username");
+	if (strncmp(pass, "admin", 7))
+		return (true);
+	return (false);
+}
+
+void	verify_user_name(char *username)
+{
+	puts("Verifying Username");
+	if (strncmp(username, "dat_wil", 7))
+		return (true);
+	return (false);
+}
+
+int	main()
+{
+	char username[76];
+	char pass[76];
+
+	puts("Enter username:");
+	fgets(&username, 0x100, stdin_fileno);
+	if (verify_user_name(&username) == false)
+	{
+		puts("Bad username");
+		return (0);
+	}
+	fgets(&pass, 0x100, stdin_fileno);
+	verify_user_pass(&username);
+	puts("Bad passwd");
+	return (0);
+}
