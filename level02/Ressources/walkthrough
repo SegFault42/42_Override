@@ -4,6 +4,35 @@ x/s 0x400bb2
 run
 set {char[7]} 0x400bb2 = "./test"
 x/s 0x400bb2
-c
 
-python -c 'print("aaaaaaaa" + "\x20\xe4\xff\xff\xff\xff\xff\x7f" + "%28$p ")' | ./level02
+On commence par cree un fichier qui contient 40 'a'. (La taille du fichier .pass)
+
+Sous gdb on lance le programme, on change le fichier a ouvrir voir au debut du fichier. (Soucis de droit)
+
+On voit qu'il y a un fopen, un fread sur le fichier puis un fgets.
+
+Le fgets recupere le nom d'utilisateur.
+
+On remplie l'username par "AAAA"
+
+Apres le fgets on affiche la stack : x/100wx $rsp
+
+On voit le contenue de notre fichier (x61 ........) et quelque offset plus loin
+notre username.
+
+On sais maintenant que notre fichier ce trouve juste avant notre username.
+
+On sort de gdb.
+
+Nous allons utiliser le bon vieux printf pour afficher la stack et recuperer le flag
+
+On affiche maintenant la stack avec des %x (python -c 'print("AAAAAAAA" + "%x " * 100)')
+
+On vois bien nos 414141..... et juste avant entre deux adresse null d'autres adresse.
+
+Sous gdb nous avons vu que juste avant notre username, nous avions le contenue de notre fichier.
+
+On remarque aussi que nous avons 40 octets (comme le contenue de notre fichier)
+
+Si on convertie nos valeur en big endian et que nous faison une conversion hex->ascii,
+nous avons notre flag.

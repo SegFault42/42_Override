@@ -1,0 +1,12 @@
+int main()
+{
+	if (fopen("/home/users/level03/.pass", "r") == -1)
+	{
+		write("Open failure\n");
+		exit(-1);
+	}
+	fread("/home/users/level03/.pass");
+	char buf[10]
+	fgets(&buf, 9);
+	printf(pass);
+}
