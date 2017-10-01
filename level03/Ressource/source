@@ -1,0 +1,41 @@
+void	decrypt()
+{
+	...
+	system("/bin/sh");
+	...
+}
+
+int32_t test(int a1, int a2)
+{
+	int result;
+	switch (a2 - a1)
+	{
+		default:
+		{
+			result = decrypt(rand());
+			break;
+		}
+
+		// case1->case21
+
+		case 21:
+		{
+			result = decrypt(21);
+			break;
+		}
+	}
+}
+
+int main(int argc, char **argv)
+{
+	int32_t nb;
+
+	srand(time(NULL));
+	puts("***********************************");
+	puts("*\t\tlevel03\t\t**");
+	puts("***********************************");
+	printf("Password:");
+	scanf("%d", &nb);
+	test(v1, 0x1337d00d);
+	return 0;
+}

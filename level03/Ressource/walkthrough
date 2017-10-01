@@ -1,0 +1,18 @@
+Dans ce binaire, nous avons un programme qui a une foret de switch case.
+
+Nous devons trouver entrer la bonne valeur pour executer la bonne condition et
+avoir notre shell.
+
+en analysans notre programme sous gdb, on voit que la fonction test prend 2 param
+notre nombre entrer dans stdin et la valeur 322424845 en dur.
+
+les switch sont entre 1 et 21 on doit donc soustraire nos 2 param pour tester tout les cas possible et entre dans le bon case.
+
+si on entre 1, cette valeur seras soustraite a 322424845 
+
+pour avoir le resultat 1 on doit donc soustraire 322424845 - (322424845 + 1) etc 
+
+le bon nombre est 322424827
+
+nous avons notre shell.
+
