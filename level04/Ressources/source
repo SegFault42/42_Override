@@ -1,0 +1,12 @@
+int	main()
+{
+	char	buff[152];
+
+	gets(&buff);
+	puts("Give me some shellcode k");
+	if (ptrace(execve) == true)
+	{
+		puts("no exec for you");
+		exit(1);
+	}
+}

