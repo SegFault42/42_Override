@@ -1,0 +1,13 @@
+int	main()
+{
+	char	buff[0x64];
+
+	fgets(0, 0x64, &buff);
+	while (buff[i] != "\0")
+	{
+		tolower(buff[i]);
+		++i;
+	}
+	printf(buff);
+	exit();
+}
