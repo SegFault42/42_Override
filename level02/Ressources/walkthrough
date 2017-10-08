@@ -26,7 +26,7 @@ On sort de gdb.
 
 Nous allons utiliser le bon vieux printf pour afficher la stack et recuperer le flag
 
-On affiche maintenant la stack avec des %x (python -c 'print("AAAAAAAA" + "%x " * 100)')
+On affiche maintenant la stack avec des %p (python -c 'print("AAAAAAAA" + "%p " * 100)')
 
 On vois bien nos 414141..... et juste avant entre deux adresse null d'autres adresse.
 

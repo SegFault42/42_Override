@@ -1,0 +1,38 @@
+Dans ce binaire, nous avons un login a entrer et le serial qui lui correspond.
+
+si on lance gdb on vois en faisant i function une fonction auth
+
+On lance gdb on disasss la fonction auth il y a un ptrace qui exit le programme
+si on lance le programme depuis un debugueur.
+
+On met un breakpoint au cmp.
+
+break *0x080487ba
+
+On run le programme.
+
+on rentre un login (rabougue) et un mot de passe (jhsfk)
+
+gdb arrete l'execution du programme au breakpoint, on change le retour de ptrace
+stocker dans eax pour que le programme continue.
+
+set $eax = 0
+
+et la il y a une boucle qui calcul une somme avec chaque caractere de notre login.
+
+une fois finis avant de sortir de la fonction auth a la ligne 303.
+
+(On peut mettre un breakpoint dessus break *0x08048877)
+
+si on affiche le contenue de la stack on vois notre somme en hexadecimal a
+l'adresse 0xffffd689. (0x005f216f)
+
+Cette somme est comparer a la string qu'on a rentrer dans le champs serial.
+Si elles sont egale, nous somme authentified et nous avons un shell.
+
+Sinon le programme exit.
+
+Maintenant que nous avons notre somme en hexa, nou pouvons la convertire en decimal 
+et la rentrer dans le champ serial.
+
+Nous avons bien notre serial valide pour le login rabougue.
