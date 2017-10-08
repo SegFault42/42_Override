@@ -1,0 +1,71 @@
+Dans ce binaire, nous avons une zone memoire ou nous pouvons ecrire des valeurs
+decimal avec la commande store, on peux lire avec la commande read et quitter.
+
+l'idee c'est d' ecrire hors de la zone memoire en specifiant un index plus grand
+pour ecraser EIP et executer un shellcode.
+
+On met un breakpoint apres la recuperation de nos valeurs : break *0x80488ef
+
+On run le programme. On store la valeur 999 a l'index 1.
+
+maintenant on affiche la stack et on vois notre 999 en hexa 0x3e7 a l'offset
+0xffffd539
+
+Apres quelque test on se rend compte qu'on ne peux pas ecrire dans les indexs
+qui sont un multiple de 3.
+
+Au debut du main il y a un sub $esp, 0x1d0.
+
+En decimal 0x1d0 = 464. Comme ce sont des int qu le programme prend, il s'agit
+probablement d'un tableau d'int. On divise par 4 464 ce qui donne 116.
+
+On a un tableau d'int d'environ 116 index.
+
+On peux savoir ou chercher pour tomber sur EIP.
+
+Si on ecris a l'index 113 on vois sous gdb que $ebp est ecraser.
+
+EIP ce trouve a l'index 114.
+
+Comme c'est un multiple de 3, le programme nous empeche d'ecrire dessus.
+
+Le seul moyen d'ecraser EIP est d'overflow avec le nombre 1073741824 + 114 (EIP location)
+
+1073741824 + 114 = 1073741938
+
+Ce n'est pas un multiple de 3 donc nous pouvons donc overflow et ecraser EIP
+
+Nous avons plus qu'a entrer un shellcode au debut de notre zone memoire et ecrire
+l'adresse de cette zone dans EIP pour executer notre shellcode
+
+on genere un shellcode avec la commande : "shellcode generate x86/linux exec"
+
+On le convertie en decimal par morceau de 4 octects et on le store a l'adresse 1, 2, 3 ...
+
+shellcode convertie = 834687080 791638888 1747935849 1854530353 3381250666 190369152
+
+shotcut : 
+
+store
+834687080
+1
+store
+791638888
+2
+store
+1747935849
+1073741827
+store
+4
+1854530353
+store
+5
+3381250666
+store
+190369152
+1073741810
+
+
+Donc apres avoir mis le breakpoint, on ecrase eip, on delete le breakpoint
+et on store notre shellcode puis on quitte
+
