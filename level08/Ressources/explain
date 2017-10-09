@@ -6,3 +6,12 @@ test
 level08@OverRide:~$ cat backups/test 
 fjAwpJNs2vvkFLRebEvAQ2hFZ4uQBWfHRsP62d8S
 
+Ce binaire fait un fopen d'un fichier passer en parametre et l'ecris dans un second fichier.
+
+le fichier passer en parametre ne peux pas contenire de cararctere '/'
+
+Si nous faisons un chmod 77 .
+puis nous faisons un lien du fichier .pass du level suivant dans le repertoire courant, nous pouvons 
+alors passer le fichier en parametre.
+
+Le contenue du fichier est dans ./backups
