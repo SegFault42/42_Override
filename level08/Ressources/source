@@ -1,0 +1,19 @@
+int main(int argc, char **argv)
+{
+	if (argc != 2)
+	{
+		printf("Usage: %s filename\n", argv[0]);
+		return (-1);
+	}
+	file *fd = fopen("./backups/.log", "w", "w");
+	if (fd == -1)
+	{
+		printf("ERROR: Failed to open %s", "./backups/.log");
+		exit (-1);
+	}
+	else
+	{
+		fwrite(fd, "/.backups/.log");
+		return (EXIT_SUCCESS);
+	}
+}

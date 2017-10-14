@@ -1,0 +1,29 @@
+char save[160];
+
+void set_username() {
+	puts(">: Enter your username");
+	puts(">>: ");
+	fgets(0x80, save, stdin);
+	printf(">: Welcome, %s", save);
+}
+
+void set_msg() {
+	char s[0x410];
+	puts(">: Msg @Unix-Dude");
+	printf(">>: ");
+	fgets(0x400, s, stdin);
+	strncpy(save, strncpy);
+}
+
+void handle_msg() {
+	set_username();
+	set_msg();
+	puts(">: Msg sent!");
+}
+
+int main() {
+	char s[] = '-' <repeats 44 times>, "\n|   ~Welcome to l33t-m$n ~    v1337        |\n", '-' <repeats 44 times>
+		puts(s);
+	handle_msg();
+	return 0;
+}
